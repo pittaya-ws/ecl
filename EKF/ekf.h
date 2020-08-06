@@ -166,6 +166,7 @@ public:
 	// get the position covariances
 	matrix::SquareMatrix<float, 3> position_covariances() const { return P.slice<3, 3>(7, 7); }
 
+	stateSample _state{};		///< state struct of the ekf running at the delayed time horizon
 	// ask estimator for sensor data collection decision and do any preprocessing if required, returns true if not defined
 	bool collect_gps(const gps_message &gps) override;
 
@@ -318,8 +319,6 @@ private:
 	float _dt_ekf_avg{FILTER_UPDATE_PERIOD_S}; ///< average update rate of the ekf
 
 	Vector3f _ang_rate_delayed_raw;	///< uncorrected angular rate vector at fusion time horizon (rad/sec)
-
-	stateSample _state{};		///< state struct of the ekf running at the delayed time horizon
 
 	bool _filter_initialised{false};	///< true when the EKF sttes and covariances been initialised
 
